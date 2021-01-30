@@ -51,25 +51,40 @@ d3.json(queryUrl, function (data) {
     };
     // Define function to set the circle color based on the magnitude
     function circleColor(magnitude) {
-      if (magnitude < 1) {
-        return "red"
-      }
-      else if (magnitude < 2) {
-        return "green"
-      }
-      else if (magnitude < 3) {
-        return "blue"
-      }
-      else if (magnitude < 4) {
-        return "purple"
-      }
-      else if (magnitude < 5) {
-        return "pink"
-      }
-      else {
-        return "white"
+      switch (true) {
+        case magnitude < 1:
+          return "red";
+        case magnitude < 2:
+          return "green";
+        case magnitude < 3:
+          return "blue";
+        case magnitude < 4:
+          return "purple";
+        case magnitude < 5:
+          return "pink";
+        default:
+          return "white";
       }
     }
+    //   if (magnitude < 1) {
+    //     return "red"
+    //   }
+    //   else if (magnitude < 2) {
+    //     return "green"
+    //   }
+    //   else if (magnitude < 3) {
+    //     return "blue"
+    //   }
+    //   else if (magnitude < 4) {
+    //     return "purple"
+    //   }
+    //   else if (magnitude < 5) {
+    //     return "pink"
+    //   }
+    //   else {
+    //     return "white"
+    //   }
+    // }
 
     // Create a GeoJSON layer containing the features array on the earthquakeData object
     // Run the function once for each piece of data in the array
@@ -163,14 +178,17 @@ var legend = L.control({ position: 'bottomright' });
 legend.onAdd = function () {
 
   var div = L.DomUtil.create('div', 'info legend'),
-    mags = [0, 1, 2, 3, 4, 5],
-    labels = ["pink", "purple", "blue", "green", "red", "white"];
+
+   grades = [0, 1, 2, 3, 4, 5];
+  var colors = ["pink", "purple", "blue", "green", "red", "white"];
+
+  //l//abels = ["pink", "purple", "blue", "green", "red", "white"];
 
   // loop through our density intervals and generate a label with a colored square for each interval
-  for (var i = 0; i < mags.length; i++) {
+  for (var i = 0; i < grades.length; i++) {
     div.innerHTML +=
-      '<i style="background:' + getColor(mags[i] + 1) + '"></i> ' +
-      mags[i] + (mags[i + 1] ? '&ndash;' + mags[i + 1] + '<br>' : '+');
+      '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+      grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
   }
 
   return div;
